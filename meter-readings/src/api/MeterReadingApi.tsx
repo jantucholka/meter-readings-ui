@@ -33,6 +33,13 @@ export function DeleteMeterReading (id: string){
     );
 }
 
+export function AddMeterReading (meterReading: MeterReading){    
+    return Axios.post(
+        `${apiHost}/Reading`,
+        meterReading
+    );
+}
+
 export function UploadMeterReadings(data: FormData): Promise<AxiosResponse>{
     const config = {
         headers: {
