@@ -1,7 +1,7 @@
 import './App.css';
-import {DeleteAccount, GetAccounts} from './api/MeterReadingApi'
+import {DeleteAccount, GetAccounts, GetMeterReadings} from './api/MeterReadingApi'
 import React, { useState, useEffect } from 'react';
-import {Account} from './api/Types'
+import {Account, MeterReading} from './api/Types'
 import { AxiosResponse } from 'axios';
 import {Table, Button} from 'react-bootstrap'
 
@@ -11,14 +11,24 @@ type AccountProps = {
 export const Accounts : React.FC<AccountProps> = (props) => {
 
   const [accounts, setAccounts] = useState<Account[]|undefined>([]);
+  const [meterReadings, setMeterReadings] = useState<MeterReading[]|undefined>([]);
   
   useEffect(()=>{
     if (accounts?.length === 0)
     fetchAccounts();
+    if (meterReadings?.length === 0)
+    fetchMeterReadings();
   });
 
   useEffect(()=>{
-  },[accounts]);
+  },[accounts, meterReadings]);
+
+  const fetchMeterReadings = () => {
+    GetMeterReadings()
+      .then((response : AxiosResponse<MeterReading[]>) => {
+          setMeterReadings(response.data);
+      });
+  }
 
 
   const fetchAccounts = () => {
@@ -28,10 +38,14 @@ export const Accounts : React.FC<AccountProps> = (props) => {
       });
   }
 
-  const deleteAccount = (accountId : number) =>{
+  const deleteAccount = (accountId : number) => {
     DeleteAccount(accountId).then(()=>{
       fetchAccounts();
     });    
+  }
+
+  const hasMeterReadings = (accountId: number) => {
+    return !meterReadings?.some((element)=> element.AccountId === accountId);
   }
   
   return( 
@@ -49,9 +63,9 @@ export const Accounts : React.FC<AccountProps> = (props) => {
                   <td>{account.AccountId}</td>
                   <td>{account.FirstName}</td>
                   <td>{account.LastName}</td>
-                  <td>
-                    <Button variant="danger" onClick={() => deleteAccount(account.AccountId)}>Remove</Button>&nbsp;
-                    <Button variant="primary" onClick={() => alert('Not implemented yet!')}>View</Button>
+                  <td>                    
+                    <Button variant="primary" onClick={() => alert('Not implemented yet!')}>View</Button>&nbsp;
+                    {hasMeterReadings(account.AccountId) === true && <Button variant="danger" onClick={() => deleteAccount(account.AccountId)}>Remove</Button>}
                   </td>
                 </tr>
               ))}
