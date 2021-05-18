@@ -1,6 +1,6 @@
 import './App.css';
 import 'react-toastify/dist/ReactToastify.css';
-import {Button,Alert,Container, Row, Col, ButtonGroup, Jumbotron} from 'react-bootstrap'
+import {Button, Container, Row, Col, ButtonGroup, Jumbotron} from 'react-bootstrap'
 import {Accounts} from './Accounts'
 import { MeterReadings } from './MeterReadings';
 import { Account} from './Account';
@@ -11,7 +11,7 @@ import {
   useHistory
 } from "react-router-dom";
 import { CsvUploader } from './CsvUploader';
-import {ToastContainer, toast} from 'react-toastify'
+import {ToastContainer} from 'react-toastify'
 
 export const Home : React.FC = () => {  
 
@@ -41,7 +41,7 @@ export const Home : React.FC = () => {
         <Jumbotron>
           <h1>ABC Energy</h1>
           <p>
-            Welcome to ABC energy, we're here to make uploading meter readings easy!
+            Welcome to ABC energy, we're here to make uploading meter readings simple!
           </p>
         </Jumbotron>
         </Col>        

@@ -20,20 +20,13 @@ export const CsvUploader : React.FC = () => {
     data.append("meterReadings", fileToUpload as Blob);
 
     UploadMeterReadings(data)
-    .then(()=>{
-      toast.success('Upload successful', {
-        position: "top-right",
-        autoClose: 2000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        });
-      setTimeout(() => {
-        navigate("/readings");
-      }, 2000);      
-    });
+    .then((success)=>{
+      toast.success('Upload successful');
+        setTimeout(() => {
+          navigate("/readings");
+        }, 2000);      
+    })
+    .catch(err => alert(err));
   }
 
   function navigate(path:string) {
@@ -50,7 +43,7 @@ export const CsvUploader : React.FC = () => {
             type="file"
             name="meterReadingsCsv"
             onChange={handleFileSelection}/>
-            <Button onClick={() => uploadFile()}>Upload</Button>
+            {fileToUpload !== undefined && <Button onClick={() => uploadFile()}>Upload</Button>}
           </Form>
           </Col>        
       </Row>        
