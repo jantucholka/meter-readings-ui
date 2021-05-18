@@ -28,7 +28,7 @@ export const Accounts : React.FC<AccountProps> = (props) => {
       });
   }
 
-  const deleteAccount = (accountId : string) =>{
+  const deleteAccount = (accountId : number) =>{
     DeleteAccount(accountId).then(()=>{
       fetchAccounts();
     });    
@@ -49,7 +49,10 @@ export const Accounts : React.FC<AccountProps> = (props) => {
                   <td>{account.AccountId}</td>
                   <td>{account.FirstName}</td>
                   <td>{account.LastName}</td>
-                  <td><Button variant="danger" onClick={() => deleteAccount(account.AccountId)}>Remove</Button></td>
+                  <td>
+                    <Button variant="danger" onClick={() => deleteAccount(account.AccountId)}>Remove</Button>&nbsp;
+                    <Button variant="primary" onClick={() => alert('Not implemented yet!')}>View</Button>
+                  </td>
                 </tr>
               ))}
             </tbody>

@@ -1,6 +1,7 @@
 import './App.css';
 import {Alert,Container, Row, Col} from 'react-bootstrap'
 import {Accounts} from './Accounts'
+import { MeterReadings } from './MeterReadings';
 
 type AppProps = {
 }
@@ -18,9 +19,11 @@ export const App : React.FC<AppProps> = (props) => {
       </Row>
       <Row>
         <Col>
-        <Accounts/>
+          <Accounts/>
         </Col>
-        <Col></Col>
+        <Col>
+          <MeterReadings/>
+        </Col>
       </Row>
     </Container>   
   ) 
