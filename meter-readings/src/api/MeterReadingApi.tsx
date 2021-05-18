@@ -40,6 +40,13 @@ export function AddMeterReading (meterReading: MeterReading){
     );
 }
 
+export function AddAccount (account: Account){    
+    return Axios.post(
+        `${apiHost}/Account`,
+        account
+    );
+}
+
 export function UploadMeterReadings(data: FormData): Promise<AxiosResponse>{
     const config = {
         headers: {

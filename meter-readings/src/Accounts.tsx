@@ -1,5 +1,5 @@
 import './App.css';
-import {DeleteAccount, GetAccounts, GetMeterReadings} from './api/MeterReadingApi'
+import {AddAccount, DeleteAccount, GetAccounts, GetMeterReadings} from './api/MeterReadingApi'
 import React, { useState, useEffect } from 'react';
 import {Account, MeterReading} from './api/Types'
 import { AxiosResponse } from 'axios';
@@ -17,7 +17,8 @@ type AccountsProps = {
 export const Accounts : React.FC<AccountsProps> = (props) => {
 
   const [accounts, setAccounts] = useState<Account[]|undefined>([]);
-  const [meterReadings, setMeterReadings] = useState<MeterReading[]|undefined>([]);
+  const [meterReadings, setMeterReadings] = useState<MeterReading[]|undefined>([]);  
+  const [formData, setFormData] = useState<MeterReading | any | undefined>({});
 
   const history = useHistory();
 
@@ -57,8 +58,27 @@ export const Accounts : React.FC<AccountsProps> = (props) => {
     });    
   }
 
+  const addAccount = () => {
+    AddAccount(formData)
+    .then(()=>{
+      history.go(0);
+    })    
+    .catch(err => alert(err));
+  }
+
   const hasMeterReadings = (accountId: number) => {
     return !meterReadings?.some((element)=> element.AccountId === accountId);
+  }
+
+  const handleInputChange = (event:any) => {
+    const target = event.target;
+    const value = target.type === 'checkbox' ? target.checked : target.value;
+    const name = target.name;
+
+    setFormData({
+      ...formData,
+      [name]: value
+    });
   }
   
   return( 
@@ -80,8 +100,14 @@ export const Accounts : React.FC<AccountsProps> = (props) => {
               <Button variant="primary" onClick={()=> navigate(`account/${account.AccountId}`)}>View</Button>&nbsp;
               {hasMeterReadings(account.AccountId) === true && <Button variant="danger" onClick={() => deleteAccount(account.AccountId)}>Remove</Button>}
             </td>
-          </tr>
+          </tr>          
         ))}
+        <tr>
+            <td><input name="accountId" value={formData.accountId} onChange={handleInputChange}/></td>
+            <td><input name="FirstName" value={formData.FirstName} onChange={handleInputChange}/></td>
+            <td><input name="LastName" value={formData.LastName} onChange={handleInputChange}/></td>
+            <td><Button variant="success" onClick={() => addAccount()}>Create</Button></td>
+          </tr>
       </tbody>
     </Table>: null          
   ) 

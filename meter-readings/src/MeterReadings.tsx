@@ -22,6 +22,9 @@ export const MeterReadings : React.FC<MeterReadingProps> = (props) => {
     if (formData.accountId === undefined && props.accountId !== undefined){
       setFormData({...formData, accountId: props.accountId})
     }
+    if (formData.MeterReadingDateTime === undefined){
+      setFormData({...formData, MeterReadingDateTime: getCurrentTimestamp()})
+    }
   });
 
   useEffect(()=>{
@@ -48,6 +51,7 @@ export const MeterReadings : React.FC<MeterReadingProps> = (props) => {
   const addMeterReading = () => {
     AddMeterReading(formData)
     .then(()=>{
+      setFormData({});
       history.go(0);
     })    
     .catch(err => alert(err));
@@ -62,6 +66,12 @@ export const MeterReadings : React.FC<MeterReadingProps> = (props) => {
       ...formData,
       [name]: value
     });
+  }
+
+  const getCurrentTimestamp = () =>{
+    var now = new Date();
+    let result = `${now.getDay()}/${now.getMonth()}/${now.getFullYear()} ${now.getHours()}:${now.getMinutes()}`
+    return result;
   }
 
   return( 
@@ -83,11 +93,11 @@ export const MeterReadings : React.FC<MeterReadingProps> = (props) => {
           </tr>
         ))}
         <tr>
-            <td>{props.accountId ? <span>{props.accountId}</span>:<input name="accountId" value={formData.accountId} onChange={handleInputChange}/>}</td>
-            <td><input name="meterReadingDateTime" value={formData.meterReadingDateTime} onChange={handleInputChange}/></td>
-            <td><input name="meterReadValue" value={formData.meterReadValue} onChange={handleInputChange}/></td>
-            <td><Button variant="success" onClick={() => addMeterReading()}>Create</Button></td>
-          </tr>
+          <td>{props.accountId ? <span>{props.accountId}</span>:<input name="accountId" value={formData.accountId} onChange={handleInputChange}/>}</td>
+          <td>{formData.MeterReadingDateTime}</td>
+          <td><input name="meterReadValue" value={formData.meterReadValue} onChange={handleInputChange}/></td>
+          <td><Button variant="success" onClick={() => addMeterReading()}>Create</Button></td>
+        </tr>
       </tbody>
     </Table>: null          
   ) 
