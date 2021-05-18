@@ -94,7 +94,7 @@ export const MeterReadings : React.FC<MeterReadingProps> = (props) => {
         ))}
         <tr>
           <td>{props.accountId ? <span>{props.accountId}</span>:<input name="accountId" value={formData.accountId} onChange={handleInputChange}/>}</td>
-          <td>{formData.MeterReadingDateTime}</td>
+          <td><input name="meterReadingDateTime" value={formData.MeterReadingDateTime} onChange={handleInputChange}/></td>
           <td><input name="meterReadValue" value={formData.meterReadValue} onChange={handleInputChange}/></td>
           <td><Button variant="success" onClick={() => addMeterReading()}>Create</Button></td>
         </tr>
