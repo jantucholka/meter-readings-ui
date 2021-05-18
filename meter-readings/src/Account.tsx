@@ -3,7 +3,7 @@ import { GetAccount, GetMeterReadings } from './api/MeterReadingApi'
 import React, { useState, useEffect } from 'react';
 import { Account as AccountModel, MeterReading } from './api/Types'
 import { AxiosResponse } from 'axios';
-import { Container, Row, Col} from 'react-bootstrap'
+import { Container, Row, Col, Image, Card} from 'react-bootstrap'
 import { useParams } from 'react-router-dom';
 import { MeterReadings } from './MeterReadings';
 
@@ -45,7 +45,17 @@ export const Account : React.FC<any> = () => {
   return( account !== undefined ?
     <Container>
       <Row>
-        <Col>`Account details for: ${account?.AccountId} - ${account?.FirstName} ${account?.LastName}`</Col>
+        <Col>
+          <Card style={{ width: '18rem' }}>
+            <Card.Img variant="top" src="https://via.placeholder.com/150" />
+            <Card.Body>
+              <Card.Title>{account.FirstName} {account.LastName}</Card.Title>
+              <Card.Text>
+                Account Id: {account.AccountId}
+              </Card.Text>
+            </Card.Body>
+          </Card>
+        </Col>
         <Col><MeterReadings accountId={parseInt(accountId as string)}/></Col>
       </Row>
     </Container> : null          

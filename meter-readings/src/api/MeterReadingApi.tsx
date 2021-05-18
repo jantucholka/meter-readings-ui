@@ -1,4 +1,4 @@
-import Axios from 'axios'
+import Axios, { AxiosResponse } from 'axios'
 import {Account, MeterReading} from './Types'
 
 const apiHost = "http://localhost:57674/api";
@@ -31,4 +31,17 @@ export function DeleteMeterReading (id: string){
     return Axios.delete(
         `${apiHost}/Reading/${id}`
     );
+}
+
+export function UploadMeterReadings(data: FormData): Promise<AxiosResponse>{
+    const config = {
+        headers: {
+            "Content-Type": "multipart/form-data"
+        }
+    }
+    return Axios.post(
+        `${apiHost}/meter-reading-uploads`,
+        data,
+        config
+    )
 }
