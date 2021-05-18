@@ -10,3 +10,9 @@ export type MeterReading = {
     MeterReadValue: string,
     Id: string
 }
+
+export type AddMeterStatusResponse = {
+    SuccessfulCount: number,
+    FailedCount: number
+    Errors: string[]
+}

@@ -1,5 +1,5 @@
 import Axios, { AxiosResponse } from 'axios'
-import {Account, MeterReading} from './Types'
+import {Account, AddMeterStatusResponse, MeterReading} from './Types'
 
 const apiHost = "http://localhost:57674/api";
 
@@ -47,7 +47,7 @@ export function AddAccount (account: Account){
     );
 }
 
-export function UploadMeterReadings(data: FormData): Promise<AxiosResponse>{
+export function UploadMeterReadings(data: FormData): Promise<AxiosResponse<AddMeterStatusResponse>>{
     const config = {
         headers: {
             "Content-Type": "multipart/form-data"

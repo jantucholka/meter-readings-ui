@@ -21,7 +21,7 @@ export const CsvUploader : React.FC = () => {
 
     UploadMeterReadings(data)
     .then((success)=>{
-      toast.success('Upload successful');
+      toast.success(`Upload complete. Success:${success.data.SuccessfulCount}, Failed: ${success.data.FailedCount}`);
         setTimeout(() => {
           navigate("/readings");
         }, 2000);      
@@ -50,3 +50,7 @@ export const CsvUploader : React.FC = () => {
     </Container>
   ) 
 };
+function AddMeterStatusResponse(data: FormData, AddMeterStatusResponse: any) {
+  throw new Error('Function not implemented.');
+}
+
